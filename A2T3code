@@ -1,0 +1,52 @@
+2a)
+
+library(ggplot2)
+library(tidyverse)
+library(WDI)
+library(maps)
+
+dat_map <- map_data("world")
+
+merged <- full_join(dat_map, wdi, by="ccode")
+
+ggplot(merged,aes(x=long,y=lat,group=group,fill=Emit_CO2percap))+
+  geom_polygon()+
+  theme(panel.background = element_blank())+
+  theme(panel.grid.major.y = element_line(color = "red"))+
+  ggtitle("Co2 Emissions worldwide")+
+  labs(x= "Longitudes", y="Lattitudes")
+  
+  
+  
+  2b)
+
+install.packages("network")
+install.packages("devtools")
+devtools::install_github("DougLuke/UserNetR")
+install.packages("GGally")
+install.packages('sna')
+
+library(tidyverse)
+library(maps)
+library(network)
+library(devtools)
+library(UserNetR)
+library(GGally)
+library(sna)
+library(ggplot2)
+
+data("Bali")
+
+Bali_data = network(Bali)
+
+terrorist_names_bali <- as.factor(get.vertex.attribute(Bali, 'vertex.names'))
+
+
+ggnet2(BaliNet, label=terrorist_names_bali) +
+  labs(title = "Bali-Terrorist-Network_Names")
+
+2c)
+  
+  roles_of_terrorist <- as.factor(get.vertex.attribute(Bali, 'role'))
+ggnet2(BaliNet, label=roles_of_terrorist) +
+  labs(title = "Terrorist-Roles in Bali Network")
